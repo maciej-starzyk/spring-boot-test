@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>modulea</artifactId>
+	<packaging>jar</packaging>
+	<name>modulea</name>
+
+	<parent>
+		<groupId>org.ms.springboot</groupId>
+		<artifactId>parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<properties>
+		<spring.boot.debug.port>5005</spring.boot.debug.port>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.ms.springboot</groupId>
+			<artifactId>test-support</artifactId>
+			<version>${revision}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-instrument</artifactId>
+						<version>${spring.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<jvmArguments>
+						-Xdebug
+						-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=${spring.boot.debug.port}
+					</jvmArguments>
+					<agent>${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar</agent>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
